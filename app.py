@@ -2,6 +2,7 @@
 from flask import Flask, render_template, request, redirect, flash
 from flask_sqlalchemy import SQLAlchemy 
 from datetime import datetime
+import webview
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db' # /// is a relative path to the db file, from the main folder
@@ -45,12 +46,14 @@ def view(post_id):
 	p = Posts.query.get(post_id)
 	return render_template('post.html', post=[p], title=p.title)
 
+
 @app.route("/del/<post_id>")
 def delete(post_id):
 	p = Posts.query.get(post_id)
 	db.session.delete(p)
 	db.session.commit()
 	return redirect("/view")	
+
 
 @app.route("/edit/<post_id>",methods = ['GET','POST'])
 def edit(post_id):
@@ -67,4 +70,4 @@ def edit(post_id):
 
 
 if __name__ == '__main__':
-	app.run(port=5001)
+	app.run(port=5001, debug = True)
