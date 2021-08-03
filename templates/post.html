@@ -1,18 +1,10 @@
 {% extends "root_template.html" %}
 
-
-
 {% block content %}
 
-	{% for p in post %}
-		<h1 style="font-size: 45px;"><b>{{p.title}}</b></h1>
-		<hr>
-			{% if p.date_posted %}
-				<p style="font-size: 20px;"><b>Written on {{p.date_posted.date().strftime('%d/%m/%Y')}}</b></p>
-			{% endif %}
-		<p style="font-size: 18px;">{{p.text}}</p>
-		<br>
-	{% endfor %}
+<h1 style="font-size:45px"><b>{{post.title}}</b></h1>
+<hr>
+<p><b>Written on {{post.date_posted.date().strftime('%d/%m/%Y')}}</b></p>
+{{post.text}}</p>
 
-<p><b><small><a href="/view">Go back to main page</a></small></b>&nbsp &nbsp<b><small><a href="/edit/{{p.post_id}}">Edit</a></b></p>
 {% endblock content %}

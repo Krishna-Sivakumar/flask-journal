@@ -2,7 +2,7 @@
 from flask import Flask, render_template, request, redirect, flash
 from flask_sqlalchemy import SQLAlchemy 
 from datetime import datetime
-import webview
+import os
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db' # /// is a relative path to the db file, from the main folder
@@ -14,6 +14,10 @@ class Posts(db.Model):
 	text = db.Column(db.Text)
 	date_posted = db.Column(db.DateTime)
 	post_id = db.Column(db.Integer, primary_key=True)
+
+
+if "site.db" not in os.listdir():
+    db.create_all()
 
 
 @app.route("/")
@@ -44,7 +48,7 @@ def process():
 @app.route("/<post_id>")
 def view(post_id):
 	p = Posts.query.get(post_id)
-	return render_template('post.html', post=[p], title=p.title)
+	return render_template('post.html', post=p, title=p.title)
 
 
 @app.route("/del/<post_id>")
